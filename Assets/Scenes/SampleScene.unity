@@ -173,7 +173,12 @@ MonoBehaviour:
   - {fileID: 7437267515561461814, guid: 97f706f451a0842d5a03ca22e081c0db, type: 3}
   - {fileID: 3883199472646797593, guid: be68d7c8cc87d4e5798d61b150d41e15, type: 3}
   - {fileID: 3529891592652023135, guid: caad4314b61254602bce1df6a1c94f5c, type: 3}
-  mapSize: {x: 10, y: 10}
+  obstacles:
+  - {fileID: 3530345457326516439, guid: e347e2e1b27a34c77beeecd7b4c44627, type: 3}
+  - {fileID: 7109546520577132611, guid: 7b51a3b87901f4fdcb49571b8b3bbbe0, type: 3}
+  - {fileID: 5508286124305619605, guid: 8dbfb0d077df84b0896bda10ed2f32c5, type: 3}
+  - {fileID: 3919986688473153415, guid: e5baff41d99254402a8d2eea889b20bd, type: 3}
+  - {fileID: 2058721185782719282, guid: 94e332440e9bb44ee94631212d37af08, type: 3}
 --- !u!1 &693401627
 GameObject:
   m_ObjectHideFlags: 0

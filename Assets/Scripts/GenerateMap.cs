@@ -7,8 +7,10 @@ public class GenerateMap : MonoBehaviour
 {
     public GameObject grass, dirt, tower;
     public GameObject[] weapons;
-    public Vector2Int mapSize;
+    public GameObject[] obstacles;
+    Vector2Int mapSize = new Vector2Int(10, 10);
     int[,] map;
+    Vector2Int start;
 
     // Instantiate GameObject as a child
     void InstantiateChild(GameObject gameObject, Vector3 position)
@@ -57,6 +59,7 @@ public class GenerateMap : MonoBehaviour
 
         foreach (Vector2Int n in Shuffle(GetNeighbors(x, y)))
         {
+            // Ensure not out of the map or a border tile (to make it interesting)
             if (n.x >= 0 &&
                 n.x < mapSize.x &&
                 n.y >= 0 &&
@@ -87,15 +90,30 @@ public class GenerateMap : MonoBehaviour
             }
         }
 
-        // Determine the starting and ending positions
-        // The end will be where the tower is
+        // Determine the starting position, this is where the enemies will spawn
+        start = new Vector2Int(0, Random.Range(0, mapSize.y));
+        map[start.x, start.y] = 1;
+
+        // The end will be where the tower is, the location the enemies will have to reach
         Vector2Int end = new Vector2Int(mapSize.x - 1, Random.Range(0, mapSize.y));
         map[end.x, end.y] = 2;
 
-        Vector2Int start = new Vector2Int(0, Random.Range(0, mapSize.y));
-        map[start.x, start.y] = 1;
+        bool[,] visited = new bool[mapSize.x, mapSize.y];
 
-        RecursiveDFS(start.x, start.y, new bool[mapSize.x, mapSize.y]);
+        // Add code here to make the initial visited tiles, so that the path is more interesting
+
+        RecursiveDFS(start.x, start.y, visited);
+
+        // Spawn in random obstacles
+        for (int i = 0; i < 10; i++)
+        {
+            int x = Random.Range(0, mapSize.x);
+            int y = Random.Range(0, mapSize.y);
+            if (map[x, y] == 0)
+            {
+                map[x, y] = 4;
+            }
+        }
 
         // Map the integers to actual prefabs
         for (int y = 0; y < mapSize.y; y++)
@@ -113,9 +131,17 @@ public class GenerateMap : MonoBehaviour
                         InstantiateChild(dirt, position);
                         break;
                     case 2: // Tower
-                        // Make sure the tower is on top of the grass tile
                         InstantiateChild(grass, position);
-                        InstantiateChild(tower, position);
+                        InstantiateChild(tower, position + tower.transform.position);
+                        break;
+                    case 3: // Weapons
+                        InstantiateChild(grass, position);
+                        GameObject weapon = weapons[Random.Range(0, weapons.Length)];
+                        InstantiateChild(weapon, position + weapon.transform.position);
+                        break;
+                    case 4: // Obstacles
+                        InstantiateChild(grass, position);
+                        InstantiateChild(obstacles[Random.Range(0, obstacles.Length)], position);
                         break;
                     default:
                         break;
