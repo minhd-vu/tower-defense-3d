@@ -10,12 +10,14 @@ public class GenerateMap : MonoBehaviour
     public Vector2Int mapSize;
     int[,] map;
 
+    // Instantiate GameObject as a child
     void InstantiateChild(GameObject gameObject, Vector3 position)
     {
         GameObject child = Instantiate(gameObject, position, Quaternion.identity);
         child.transform.parent = this.transform;
     }
 
+    // Get the neighbors of a node in an adjacency matrix
     List<Vector2Int> GetNeighbors(int x, int y)
     {
         return new List<Vector2Int>(4)
@@ -27,7 +29,7 @@ public class GenerateMap : MonoBehaviour
         };
     }
 
-
+    // Shuffle a list
     public static IList<T> Shuffle<T>(IList<T> list)
     {
         int n = list.Count;
@@ -43,6 +45,7 @@ public class GenerateMap : MonoBehaviour
         return list;
     }
 
+    // Determine a random path from start to the tower
     bool RecursiveDFS(int x, int y, bool[,] visited)
     {
         if (map[x, y] == 2)
@@ -74,6 +77,7 @@ public class GenerateMap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Generate a int map which will determine what tiles are what
         map = new int[mapSize.x, mapSize.y];
         for (int y = 0; y < mapSize.y; y++)
         {
@@ -83,6 +87,8 @@ public class GenerateMap : MonoBehaviour
             }
         }
 
+        // Determine the starting and ending positions
+        // The end will be where the tower is
         Vector2Int end = new Vector2Int(mapSize.x - 1, Random.Range(0, mapSize.y));
         map[end.x, end.y] = 2;
 
@@ -91,6 +97,7 @@ public class GenerateMap : MonoBehaviour
 
         RecursiveDFS(start.x, start.y, new bool[mapSize.x, mapSize.y]);
 
+        // Map the integers to actual prefabs
         for (int y = 0; y < mapSize.y; y++)
         {
             for (int x = 0; x < mapSize.x; x++)
@@ -99,13 +106,14 @@ public class GenerateMap : MonoBehaviour
 
                 switch (map[x, y])
                 {
-                    case 0:
+                    case 0: // Grass
                         InstantiateChild(grass, position);
                         break;
-                    case 1:
+                    case 1: // Dirt
                         InstantiateChild(dirt, position);
                         break;
-                    case 2:
+                    case 2: // Tower
+                        // Make sure the tower is on top of the grass tile
                         InstantiateChild(grass, position);
                         InstantiateChild(tower, position);
                         break;
@@ -115,6 +123,7 @@ public class GenerateMap : MonoBehaviour
             }
         }
 
+        // Set the camera to the correct location 
         Camera.main.transform.position = new Vector3(mapSize.x / 2f, 10f, 1f);
         Camera.main.transform.eulerAngles = new Vector3(75f, 0, 0);
     }
