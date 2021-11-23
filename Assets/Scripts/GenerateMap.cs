@@ -47,6 +47,15 @@ public class GenerateMap : MonoBehaviour
         return list;
     }
 
+    // Ensure that the point is within the bounds of the map
+    bool InBounds(int x, int y)
+    {
+        return n.x >= 0 &&
+                n.x < mapSize.x &&
+                n.y >= 0 &&
+                n.y < mapSize.y;
+    }
+
     // Determine a random path from start to the tower
     bool RecursiveDFS(int x, int y, bool[,] visited)
     {
@@ -60,11 +69,7 @@ public class GenerateMap : MonoBehaviour
         foreach (Vector2Int n in Shuffle(GetNeighbors(x, y)))
         {
             // Ensure not out of the map or a border tile (to make it interesting)
-            if (n.x >= 0 &&
-                n.x < mapSize.x &&
-                n.y >= 0 &&
-                n.y < mapSize.y &&
-                !visited[n.x, n.y])
+            if (InBounds(n.x, n.y) && !visited[n.x, n.y])
             {
                 if (RecursiveDFS(n.x, n.y, visited))
                 {
