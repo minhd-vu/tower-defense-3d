@@ -50,10 +50,7 @@ public class GenerateMap : MonoBehaviour
     // Ensure that the point is within the bounds of the map
     bool InBounds(int x, int y)
     {
-        return n.x >= 0 &&
-                n.x < mapSize.x &&
-                n.y >= 0 &&
-                n.y < mapSize.y;
+        return x >= 0 && x < mapSize.x && y >= 0 && y < mapSize.y;
     }
 
     // Determine a random path from start to the tower
