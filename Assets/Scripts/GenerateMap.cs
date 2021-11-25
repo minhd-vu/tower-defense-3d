@@ -102,10 +102,23 @@ public class GenerateMap : MonoBehaviour
         // The end will be where the tower is, the location the enemies will have to reach
         Vector2Int end = new Vector2Int(mapSize.x - 1, Random.Range(0, mapSize.y));
 
-        // Add code here to make the initial visited tiles, so that the path is more interesting
+        List<Vector2Int> waypoints = new List<Vector2Int>();
+        waypoints.Add(start);
+
+        for (int x = 2; x < mapSize.x - 1; x += 2)
+        {
+            var pos = new Vector2Int(x, Random.Range(1, mapSize.y - 1));
+            waypoints.Add(pos);
+            map[pos.x, pos.y] = 3;
+        }
+
+        waypoints.Add(end);
 
         // RecursiveDFS(start.x, start.y, visited);
-        FindPath(start, end);
+        for (int i = 0; i < waypoints.Count - 1; i++)
+        {
+            FindPath(waypoints[i], waypoints[i + 1]);
+        }
 
         map[end.x, end.y] = 2;
 
@@ -179,7 +192,7 @@ public class GenerateMap : MonoBehaviour
         while (open.Any())
         {
             Node curr = open.OrderBy(x => x.total).First();
-            Debug.Log(curr);
+            // Debug.Log(curr);
             if (curr.x == end.x && curr.y == end.y)
             {
                 while (curr != null)
