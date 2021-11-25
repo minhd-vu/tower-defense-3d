@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class GenerateMap : MonoBehaviour
 {
@@ -84,6 +85,8 @@ public class GenerateMap : MonoBehaviour
     {
         // Generate a int map which will determine what tiles are what
         map = new int[mapSize.x, mapSize.y];
+        bool[,] visited = new bool[mapSize.x, mapSize.y];
+
         for (int y = 0; y < mapSize.y; y++)
         {
             for (int x = 0; x < mapSize.x; x++)
@@ -99,8 +102,6 @@ public class GenerateMap : MonoBehaviour
         // The end will be where the tower is, the location the enemies will have to reach
         Vector2Int end = new Vector2Int(mapSize.x - 1, Random.Range(0, mapSize.y));
         map[end.x, end.y] = 2;
-
-        bool[,] visited = new bool[mapSize.x, mapSize.y];
 
         // Add code here to make the initial visited tiles, so that the path is more interesting
 
@@ -160,5 +161,75 @@ public class GenerateMap : MonoBehaviour
     void Update()
     {
 
+    }
+
+    private List<Node> FindPath(Vector2Int start, Vector2Int end)
+    {
+        List<Node> open = new List<Node>();
+        List<Node> closed = new List<Node>();
+
+        Node node = new Node(start.x, start.y);
+        node.SetDistance(end);
+
+        open.Add(node);
+
+        while (open.Any())
+        {
+            var curr = open.OrderBy(x => x.total).First();
+            if (curr.x == end.x && curr.y == end.y)
+            {
+                return null;
+            }
+
+            closed.Add(curr);
+            open.Remove(curr);
+
+            foreach (Vector2Int pos in Shuffle(GetNeighbors(curr.x, curr.y)))
+            {
+                if (InBounds(pos.x, pos.y))
+                {
+                    Node neighbor = new Node(pos.x, pos.y);
+                    neighbor.parent = curr;
+                    neighbor.SetDistance(end);
+
+                    if (closed.Any(e => e.x == neighbor.x && e.y == neighbor.y))
+                        continue;
+
+                    if (open.Any(x => x.x == neighbor.x && x.y == neighbor.y))
+                    {
+                        var existing = open.First(x => x.x == neighbor.x && x.y == neighbor.y);
+                        if (existing.total > curr.total)
+                        {
+                            open.Remove(existing);
+                            open.Add(neighbor);
+                        }
+                    }
+                    else
+                    {
+                        open.Add(neighbor);
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private class Node
+    {
+        public int x { get; set; }
+        public int y { get; set; }
+        public int cost { get; set; }
+        public int distance { get; set; }
+        public int total => cost + distance;
+        public Node parent { get; set; }
+        public Node(int x, int y)
+        {
+            this.x = this.y;
+        }
+        public void SetDistance(Vector2Int target)
+        {
+            this.distance = Mathf.Abs(target.x - x) + Mathf.Abs(target.y - y);
+        }
     }
 }
