@@ -101,11 +101,13 @@ public class GenerateMap : MonoBehaviour
 
         // The end will be where the tower is, the location the enemies will have to reach
         Vector2Int end = new Vector2Int(mapSize.x - 1, Random.Range(0, mapSize.y));
-        map[end.x, end.y] = 2;
 
         // Add code here to make the initial visited tiles, so that the path is more interesting
 
-        RecursiveDFS(start.x, start.y, visited);
+        // RecursiveDFS(start.x, start.y, visited);
+        FindPath(start, end);
+
+        map[end.x, end.y] = 2;
 
         // Spawn in random obstacles
         for (int i = 0; i < 10; i++)
@@ -163,7 +165,7 @@ public class GenerateMap : MonoBehaviour
 
     }
 
-    private List<Node> FindPath(Vector2Int start, Vector2Int end)
+    private bool FindPath(Vector2Int start, Vector2Int end)
     {
         List<Node> open = new List<Node>();
         List<Node> closed = new List<Node>();
@@ -172,13 +174,21 @@ public class GenerateMap : MonoBehaviour
         node.SetDistance(end);
 
         open.Add(node);
+        Debug.Log(node + " " + start + " " + end);
 
         while (open.Any())
         {
-            var curr = open.OrderBy(x => x.total).First();
+            Node curr = open.OrderBy(x => x.total).First();
+            Debug.Log(curr);
             if (curr.x == end.x && curr.y == end.y)
             {
-                return null;
+                while (curr != null)
+                {
+                    map[curr.x, curr.y] = 1;
+                    curr = curr.parent;
+                }
+
+                return true;
             }
 
             closed.Add(curr);
@@ -212,7 +222,7 @@ public class GenerateMap : MonoBehaviour
             }
         }
 
-        return null;
+        return false;
     }
 
     private class Node
@@ -225,11 +235,17 @@ public class GenerateMap : MonoBehaviour
         public Node parent { get; set; }
         public Node(int x, int y)
         {
-            this.x = this.y;
+            this.x = x;
+            this.y = y;
         }
         public void SetDistance(Vector2Int target)
         {
             this.distance = Mathf.Abs(target.x - x) + Mathf.Abs(target.y - y);
+        }
+
+        public override string ToString()
+        {
+            return (new Vector2Int(x, y)).ToString();
         }
     }
 }
