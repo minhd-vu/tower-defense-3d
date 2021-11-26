@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
         // Move the enemy towards the path node
         Vector3 position = new Vector3(transform.position.x, 0, transform.position.z);
         Vector3 dir = target - position;
-        Debug.Log(dir);
+        // Debug.Log(dir);
         transform.Translate(dir.normalized * speed * Time.deltaTime);
 
         // Give a new path node if the enemy has reach it
@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour
         if (++pathIndex >= GenerateMap.path.Count)
         {
             Destroy(gameObject);
+            return;
         }
 
         // Get the next path for the enemy to follow
