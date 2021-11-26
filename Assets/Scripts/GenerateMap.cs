@@ -12,6 +12,7 @@ public class GenerateMap : MonoBehaviour
     Vector2Int mapSize = new Vector2Int(10, 10);
     int[,] map;
     Vector2Int start;
+    List<Vector2Int> path;
 
     // Instantiate GameObject as a child
     void InstantiateChild(GameObject gameObject, Vector3 position)
@@ -29,7 +30,7 @@ public class GenerateMap : MonoBehaviour
             new Vector2Int(x, y + 1),
             new Vector2Int(x, y - 1),
             new Vector2Int(x - 1, y)
-        }.FindAll(e => InBounds(e.x, e.y));
+        }.FindAll(e => InMapBounds(e.x, e.y));
     }
 
     // Shuffle a list
@@ -49,35 +50,9 @@ public class GenerateMap : MonoBehaviour
     }
 
     // Ensure that the point is within the bounds of the map
-    bool InBounds(int x, int y)
+    bool InMapBounds(int x, int y)
     {
         return x >= 0 && x < mapSize.x && y >= 0 && y < mapSize.y;
-    }
-
-    // Determine a random path from start to the tower
-    bool RecursiveDFS(int x, int y, bool[,] visited)
-    {
-        if (map[x, y] == 2)
-        {
-            return true;
-        }
-
-        visited[x, y] = true;
-
-        foreach (Vector2Int n in Shuffle(GetNeighbors(x, y)))
-        {
-            // Ensure not out of the map or a border tile (to make it interesting)
-            if (InBounds(n.x, n.y) && !visited[n.x, n.y])
-            {
-                if (RecursiveDFS(n.x, n.y, visited))
-                {
-                    map[x, y] = 1;
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 
     // Start is called before the first frame update
@@ -86,6 +61,7 @@ public class GenerateMap : MonoBehaviour
         // Generate a int map which will determine what tiles are what
         map = new int[mapSize.x, mapSize.y];
         bool[,] visited = new bool[mapSize.x, mapSize.y];
+        path = new List<Vector2Int>();
 
         for (int y = 0; y < mapSize.y; y++)
         {
@@ -113,7 +89,6 @@ public class GenerateMap : MonoBehaviour
         }
         waypoints.Add(end);
 
-        // RecursiveDFS(start.x, start.y, visited);
         for (int i = 0; i < waypoints.Count - 1; i++)
         {
             FindPath(waypoints[i], waypoints[i + 1]);
@@ -121,6 +96,9 @@ public class GenerateMap : MonoBehaviour
 
         // Set the tower position
         map[end.x, end.y] = 2;
+
+        // Remove duplicates from the path
+        path = path.Distinct().ToList();
 
         // Spawn in random obstacles
         for (int i = 0; i < 10; i++)
@@ -188,7 +166,7 @@ public class GenerateMap : MonoBehaviour
         node.SetDistance(end);
 
         open.Add(node);
-        Debug.Log(node + " " + start + " " + end);
+        // Debug.Log(node + " " + start + " " + end);
 
         while (open.Any())
         {
@@ -196,9 +174,12 @@ public class GenerateMap : MonoBehaviour
             // Debug.Log(curr);
             if (curr.x == end.x && curr.y == end.y)
             {
+                // Set the map tiles and create the enemy path
+                int count = path.Count;
                 while (curr != null)
                 {
                     map[curr.x, curr.y] = 1;
+                    path.Insert(count, new Vector2Int(curr.x, curr.y));
                     curr = curr.parent;
                 }
 
