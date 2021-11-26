@@ -19,9 +19,11 @@ public class Weapon : MonoBehaviour
         if (target == null)
             return;
 
+        // Rotate towards target
         Vector3 dir = target.position - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(dir);
-        transform.rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
+        Quaternion quaternion = Quaternion.LookRotation(dir);
+        Vector3 rotation = Quaternion.Lerp(transform.rotation, quaternion, Time.deltaTime * 10f).eulerAngles;
+        transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
     }
 
     void UpdateTarget()
