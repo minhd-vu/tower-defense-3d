@@ -25,11 +25,11 @@ public class GenerateMap : MonoBehaviour
     {
         return new List<Vector2Int>(4)
         {
+            new Vector2Int(x + 1, y),
             new Vector2Int(x, y + 1),
             new Vector2Int(x, y - 1),
-            new Vector2Int(x + 1, y),
             new Vector2Int(x - 1, y)
-        };
+        }.FindAll(e => InBounds(e.x, e.y));
     }
 
     // Shuffle a list
@@ -102,16 +102,15 @@ public class GenerateMap : MonoBehaviour
         // The end will be where the tower is, the location the enemies will have to reach
         Vector2Int end = new Vector2Int(mapSize.x - 1, Random.Range(0, mapSize.y));
 
+        // Generate waypoints for nodal pathfinding
         List<Vector2Int> waypoints = new List<Vector2Int>();
         waypoints.Add(start);
-
-        for (int x = 2; x < mapSize.x - 1; x += 2)
+        for (int x = 3; x < 7; x += 2)
         {
             var pos = new Vector2Int(x, Random.Range(1, mapSize.y - 1));
             waypoints.Add(pos);
             map[pos.x, pos.y] = 3;
         }
-
         waypoints.Add(end);
 
         // RecursiveDFS(start.x, start.y, visited);
@@ -120,6 +119,7 @@ public class GenerateMap : MonoBehaviour
             FindPath(waypoints[i], waypoints[i + 1]);
         }
 
+        // Set the tower position
         map[end.x, end.y] = 2;
 
         // Spawn in random obstacles
@@ -178,6 +178,7 @@ public class GenerateMap : MonoBehaviour
 
     }
 
+    // A* pathfinding from start to end position
     private bool FindPath(Vector2Int start, Vector2Int end)
     {
         List<Node> open = new List<Node>();
@@ -209,35 +210,39 @@ public class GenerateMap : MonoBehaviour
 
             foreach (Vector2Int pos in Shuffle(GetNeighbors(curr.x, curr.y)))
             {
-                if (InBounds(pos.x, pos.y))
+                // Prevent traversing an already existing path
+                if (map[pos.x, pos.y] == 1)
+                    continue;
+
+                // The neighbors to the current neighbor, prevent paths from being adjacent to one another
+                var adjacent = GetNeighbors(pos.x, pos.y);
+                if (adjacent.Any(e => e.x != curr.x && e.y != curr.y && map[e.x, e.y] == 1))
+                    continue;
+
+                Node neighbor = new Node(pos.x, pos.y);
+                neighbor.parent = curr;
+                neighbor.SetDistance(end);
+
+                if (closed.Any(x => x.x == neighbor.x && x.y == neighbor.y))
+                    continue;
+
+                if (open.Any(x => x.x == neighbor.x && x.y == neighbor.y))
                 {
-                    Node neighbor = new Node(pos.x, pos.y);
-                    neighbor.parent = curr;
-                    neighbor.SetDistance(end);
-
-                    if (closed.Any(e => e.x == neighbor.x && e.y == neighbor.y))
-                        continue;
-
-                    if (open.Any(x => x.x == neighbor.x && x.y == neighbor.y))
+                    var existing = open.First(x => x.x == neighbor.x && x.y == neighbor.y);
+                    if (existing.total > curr.total)
                     {
-                        var existing = open.First(x => x.x == neighbor.x && x.y == neighbor.y);
-                        if (existing.total > curr.total)
-                        {
-                            open.Remove(existing);
-                            open.Add(neighbor);
-                        }
-                    }
-                    else
-                    {
+                        open.Remove(existing);
                         open.Add(neighbor);
                     }
                 }
+                else open.Add(neighbor);
             }
         }
 
         return false;
     }
 
+    // Node for a* pathfinding
     private class Node
     {
         public int x { get; set; }
