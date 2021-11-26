@@ -9,13 +9,14 @@ public class GenerateMap : MonoBehaviour
     public GameObject grass, dirt, tower;
     public GameObject[] weapons;
     public GameObject[] obstacles;
+    public GameObject[] enemies;
     Vector2Int mapSize = new Vector2Int(10, 10);
     int[,] map;
     Vector2Int start;
-    List<Vector2Int> path;
+    public static List<Vector2Int> path;
 
     // Instantiate GameObject as a child
-    void InstantiateChild(GameObject gameObject, Vector3 position)
+    public void InstantiateChild(GameObject gameObject, Vector3 position)
     {
         GameObject child = Instantiate(gameObject, position, Quaternion.identity);
         child.transform.parent = this.transform;
@@ -29,7 +30,7 @@ public class GenerateMap : MonoBehaviour
             new Vector2Int(x + 1, y),
             new Vector2Int(x, y + 1),
             new Vector2Int(x, y - 1),
-            new Vector2Int(x - 1, y)
+            new Vector2Int(x - 1, y),
         }.FindAll(e => InMapBounds(e.x, e.y));
     }
 
@@ -148,12 +149,19 @@ public class GenerateMap : MonoBehaviour
         // Set the camera to the correct location 
         Camera.main.transform.position = new Vector3(mapSize.x / 2f, 10f, 1f);
         Camera.main.transform.eulerAngles = new Vector3(75f, 0, 0);
+
+        InvokeRepeating("SpawnEnemy", 5, 5);
     }
 
     // Update is called once per frame
     void Update()
     {
+    }
 
+    // Spawn an enemy at the start position
+    void SpawnEnemy()
+    {
+        InstantiateChild(enemies[Random.Range(0, enemies.Length)], new Vector3(start.x, 0, start.y));
     }
 
     // A* pathfinding from start to end position
