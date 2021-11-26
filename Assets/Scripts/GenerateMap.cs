@@ -108,7 +108,8 @@ public class GenerateMap : MonoBehaviour
             int y = Random.Range(0, mapSize.y);
             if (map[x, y] == 0)
             {
-                map[x, y] = 4;
+                map[x, y] = 3;
+                // map[x, y] = 4;
             }
         }
 
