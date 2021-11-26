@@ -180,7 +180,8 @@ MonoBehaviour:
   - {fileID: 3919986688473153415, guid: e5baff41d99254402a8d2eea889b20bd, type: 3}
   - {fileID: 2058721185782719282, guid: 94e332440e9bb44ee94631212d37af08, type: 3}
   enemies:
-  - {fileID: 3529891592652023135, guid: caad4314b61254602bce1df6a1c94f5c, type: 3}
+  - {fileID: 4477243277387998618, guid: 4f19611da718d4734a876c574e0cd563, type: 3}
+  - {fileID: 6884333685355108412, guid: 60ba0dacb24744c398d8189f4f305404, type: 3}
 --- !u!1 &693401627
 GameObject:
   m_ObjectHideFlags: 0

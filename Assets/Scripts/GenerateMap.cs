@@ -161,7 +161,8 @@ public class GenerateMap : MonoBehaviour
     // Spawn an enemy at the start position
     void SpawnEnemy()
     {
-        InstantiateChild(enemies[Random.Range(0, enemies.Length)], new Vector3(start.x, 0, start.y));
+        GameObject enemy = enemies[Random.Range(0, enemies.Length)];
+        InstantiateChild(enemy, new Vector3(start.x, 0, start.y) + enemy.transform.position);
     }
 
     // A* pathfinding from start to end position
