@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
 {
     private Transform target;
     public float speed = 5f;
+    public GameObject hitEffect;
 
     public void Seek(Transform target)
     {
@@ -47,6 +48,8 @@ public class Projectile : MonoBehaviour
 
     void HitTarget()
     {
+        // GameObject particle = Instantiate(hitEffect, transform.position, transform.rotation);
+        // Destroy(particle, 2f);
         Destroy(gameObject);
         return;
     }
