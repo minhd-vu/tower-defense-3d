@@ -23,10 +23,11 @@ public class GenerateMap : MonoBehaviour
     }
 
     // Instantiate GameObject as a child
-    public void InstantiateChild(GameObject gameObject, Vector3 position)
+    public GameObject InstantiateChild(GameObject gameObject, Vector3 position)
     {
         GameObject child = Instantiate(gameObject, position, Quaternion.identity);
         child.transform.parent = this.transform;
+        return child;
     }
 
     public List<Vector2Int> GetPath()
@@ -120,8 +121,8 @@ public class GenerateMap : MonoBehaviour
             int y = Random.Range(0, mapSize.y);
             if (map[x, y] == 0)
             {
-                map[x, y] = 3;
-                // map[x, y] = 4;
+                // map[x, y] = 3;
+                map[x, y] = 4;
             }
         }
 
@@ -141,7 +142,8 @@ public class GenerateMap : MonoBehaviour
                         InstantiateChild(dirt, position);
                         break;
                     case 2: // Tower
-                        InstantiateChild(grass, position);
+                        var tile = InstantiateChild(grass, position);
+                        Destroy(tile.GetComponent<Tile>());
                         InstantiateChild(tower, position + tower.transform.position);
                         break;
                     case 3: // Weapons
@@ -150,7 +152,7 @@ public class GenerateMap : MonoBehaviour
                         InstantiateChild(weapon, position + weapon.transform.position);
                         break;
                     case 4: // Obstacles
-                        InstantiateChild(grass, position);
+                        // InstantiateChild(grass, position);
                         InstantiateChild(obstacles[Random.Range(0, obstacles.Length)], position);
                         break;
                     default:

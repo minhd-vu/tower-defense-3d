@@ -6,7 +6,7 @@ public class BuildManager : MonoBehaviour
 {
     public static BuildManager instance;
 
-    private GameObject building;
+    public GameObject building;
 
     public GameObject GetBuilding()
     {

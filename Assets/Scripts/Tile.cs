@@ -29,7 +29,8 @@ public class Tile : MonoBehaviour
         if (weapon != null)
             return;
 
-        weapon = Instantiate(BuildManager.instance.GetBuilding(), transform.position, transform.rotation);
+        var building = BuildManager.instance.GetBuilding();
+        weapon = Instantiate(building, transform.position + building.transform.position, transform.rotation);
     }
     void OnMouseEnter()
     {
