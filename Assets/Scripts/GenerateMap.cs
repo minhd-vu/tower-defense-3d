@@ -11,7 +11,6 @@ public class GenerateMap : MonoBehaviour
     public GameObject grass, dirt, tower;
     public GameObject[] weapons;
     public GameObject[] obstacles;
-    public GameObject[] enemies;
     private Vector2Int mapSize = new Vector2Int(10, 10);
     private int[,] map;
     private Vector2Int start;
@@ -33,6 +32,11 @@ public class GenerateMap : MonoBehaviour
     public List<Vector2Int> GetPath()
     {
         return path;
+    }
+
+    public Vector2Int GetStart()
+    {
+        return start;
     }
 
     // Get the neighbors of a node in an adjacency matrix
@@ -162,24 +166,14 @@ public class GenerateMap : MonoBehaviour
         }
 
         // Set the camera to the correct location 
-        Camera.main.transform.position = new Vector3(mapSize.x / 2f, 10f, 1f);
-        Camera.main.transform.eulerAngles = new Vector3(75f, 0, 0);
-
-        InvokeRepeating("SpawnEnemy", 5, 5);
+        // Camera.main.transform.position = new Vector3(mapSize.x / 2f, 10f, 1f);
+        // Camera.main.transform.eulerAngles = new Vector3(75f, 0, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
     }
-
-    // Spawn an enemy at the start position
-    private void SpawnEnemy()
-    {
-        GameObject enemy = enemies[Random.Range(0, enemies.Length)];
-        InstantiateChild(enemy, new Vector3(start.x, 0, start.y) + enemy.transform.position);
-    }
-
     // A* pathfinding from start to end position
     private bool FindPath(Vector2Int start, Vector2Int end)
     {
