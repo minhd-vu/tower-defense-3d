@@ -6,14 +6,21 @@ using System.Linq;
 
 public class GenerateMap : MonoBehaviour
 {
+    public static GenerateMap instance;
+
     public GameObject grass, dirt, tower;
     public GameObject[] weapons;
     public GameObject[] obstacles;
     public GameObject[] enemies;
-    Vector2Int mapSize = new Vector2Int(10, 10);
-    int[,] map;
-    Vector2Int start;
-    public static List<Vector2Int> path;
+    private Vector2Int mapSize = new Vector2Int(10, 10);
+    private int[,] map;
+    private Vector2Int start;
+    private List<Vector2Int> path;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     // Instantiate GameObject as a child
     public void InstantiateChild(GameObject gameObject, Vector3 position)
@@ -22,8 +29,13 @@ public class GenerateMap : MonoBehaviour
         child.transform.parent = this.transform;
     }
 
+    public List<Vector2Int> GetPath()
+    {
+        return path;
+    }
+
     // Get the neighbors of a node in an adjacency matrix
-    List<Vector2Int> GetNeighbors(int x, int y)
+    private List<Vector2Int> GetNeighbors(int x, int y)
     {
         return new List<Vector2Int>(4)
         {
@@ -35,7 +47,7 @@ public class GenerateMap : MonoBehaviour
     }
 
     // Shuffle a list
-    public static IList<T> Shuffle<T>(IList<T> list)
+    private static IList<T> Shuffle<T>(IList<T> list)
     {
         int n = list.Count;
         while (n > 1)
@@ -51,7 +63,7 @@ public class GenerateMap : MonoBehaviour
     }
 
     // Ensure that the point is within the bounds of the map
-    bool InMapBounds(int x, int y)
+    private bool InMapBounds(int x, int y)
     {
         return x >= 0 && x < mapSize.x && y >= 0 && y < mapSize.y;
     }
@@ -160,7 +172,7 @@ public class GenerateMap : MonoBehaviour
     }
 
     // Spawn an enemy at the start position
-    void SpawnEnemy()
+    private void SpawnEnemy()
     {
         GameObject enemy = enemies[Random.Range(0, enemies.Length)];
         InstantiateChild(enemy, new Vector3(start.x, 0, start.y) + enemy.transform.position);

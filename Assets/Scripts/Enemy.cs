@@ -37,14 +37,15 @@ public class Enemy : MonoBehaviour
 
     void GetNextPath()
     {
+        var path = GenerateMap.instance.GetPath();
         // Destroy the enemy if it has reached the tower
-        if (++pathIndex >= GenerateMap.path.Count)
+        if (++pathIndex >= path.Count)
         {
             Destroy(gameObject);
             return;
         }
 
         // Get the next path for the enemy to follow
-        target = new Vector3(GenerateMap.path[pathIndex].x, 0, GenerateMap.path[pathIndex].y);
+        target = new Vector3(path[pathIndex].x, 0, path[pathIndex].y);
     }
 }

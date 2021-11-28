@@ -8,6 +8,8 @@ public class Tile : MonoBehaviour
     private Color startColor;
     private Renderer rend;
 
+    private GameObject weapon;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +24,13 @@ public class Tile : MonoBehaviour
 
     }
 
+    void OnMouseDown()
+    {
+        if (weapon != null)
+            return;
+
+        weapon = Instantiate(BuildManager.instance.GetBuilding(), transform.position, transform.rotation);
+    }
     void OnMouseEnter()
     {
         rend.materials[1].color = hoverColor;
