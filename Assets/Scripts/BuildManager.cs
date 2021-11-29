@@ -6,11 +6,18 @@ public class BuildManager : MonoBehaviour
 {
     public static BuildManager instance;
 
-    public GameObject building;
+    public List<GameObject> buildings;
+    private int buildingIndex = 0;
 
     public GameObject GetBuilding()
     {
-        return building;
+        return buildings[buildingIndex];
+    }
+
+    public void SelectBuilding(int index)
+    {
+        Debug.Log("Selected Buidling");
+        buildingIndex = index;
     }
 
     void Awake()
