@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Tile : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class Tile : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         if (weapon != null)
             return;
 
@@ -34,6 +38,12 @@ public class Tile : MonoBehaviour
     }
     void OnMouseEnter()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
+        if (weapon != null)
+            return;
+
         rend.materials[1].color = hoverColor;
     }
 
