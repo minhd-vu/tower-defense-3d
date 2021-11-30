@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
     public float range = 3f;
     public float fireRate = 1f;
     private float fireCountdown = 0f;
+    public int cost = 100;
     public GameObject projectile;
     public Transform firePoint;
     private Transform target;

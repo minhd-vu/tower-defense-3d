@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public float speed = 1f;
     private Vector3 target;
     private int pathIndex = 0;
+    public int currencyDrop = 10;
 
     // Start is called before the first frame update
     void Start()
