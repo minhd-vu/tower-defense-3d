@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthUI : MonoBehaviour
+public class ScoreUI : MonoBehaviour
 {
-    public Text healthText;
+    public Text scoreText;
 
 	// Update is called once per frame
 	void Update () {
-		healthText.text = Player.instance.health.ToString();
+		scoreText.text = Player.instance.score.ToString();
 	}
 }
