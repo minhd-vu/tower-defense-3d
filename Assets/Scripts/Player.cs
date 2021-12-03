@@ -6,10 +6,10 @@ public class Player : MonoBehaviour
 {
     public static Player instance;
     public int startingCurrency = 1000;
-    private int currency;
-    private int score = 0;
-    public int maxHealth;
-    private int health;
+    public int currency;
+    public int score = 0;
+    public int maxHealth = 100;
+    public int health;
 
     void Awake()
     {
