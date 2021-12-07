@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public Enemy enemy;
     private Transform target;
     public float speed = 5f;
     public GameObject hitEffect;
@@ -50,6 +51,7 @@ public class Projectile : MonoBehaviour
     {
         // GameObject particle = Instantiate(hitEffect, transform.position, transform.rotation);
         // Destroy(particle, 2f);
+        enemy.health -= 25;
         Destroy(gameObject);
         return;
     }
