@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 176050114}
   - component: {fileID: 176050113}
+  - component: {fileID: 176050115}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -155,7 +156,7 @@ MonoBehaviour:
   startingCurrency: 1000
   currency: 0
   score: 0
-  maxHealth: 0
+  maxHealth: 100
   health: 0
 --- !u!4 &176050114
 Transform:
@@ -171,6 +172,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &176050115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176050112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b710f89713ebb4220a19e0277ef75a82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plr: {fileID: 176050113}
+  maxHealth: 100
+  speed: 1
+  currencyDrop: 10
 --- !u!1001 &231077313
 PrefabInstance:
   m_ObjectHideFlags: 0

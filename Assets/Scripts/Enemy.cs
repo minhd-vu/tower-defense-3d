@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public Player plr;
     public int maxHealth = 100;
-    private int health;
+    public int health;
     public float speed = 1f;
     private Vector3 target;
     private int pathIndex = 0;
@@ -34,6 +35,10 @@ public class Enemy : MonoBehaviour
         {
             GetNextPath();
         }
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void GetNextPath()
@@ -42,6 +47,7 @@ public class Enemy : MonoBehaviour
         // Destroy the enemy if it has reached the tower
         if (++pathIndex >= path.Count)
         {
+            Player.instance.health--;
             Destroy(gameObject);
             return;
         }
