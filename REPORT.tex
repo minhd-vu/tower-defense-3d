@@ -1,0 +1,158 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{amsmath,amsfonts,stmaryrd,amssymb}
+\usepackage{enumerate}
+\usepackage{helvet}
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+\usepackage[compact]{titlesec}
+\usepackage{csquotes}
+\usepackage{authblk}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,chains,positioning}
+
+\titlespacing{\section}{0pt}{*0}{*0}
+\titlespacing{\subsection}{0pt}{*0}{*0}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+
+\geometry{
+        paper=letterpaper,
+        top=2.5cm,
+        bottom=3cm,
+        left=2.5cm,
+        right=2.5cm,
+        headheight=14pt,
+        footskip=1.5cm,
+        headsep=1.2cm,
+        %showframe,
+}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+
+\lstset{style=mystyle}
+
+\title{Procedurally Generated Tower Defense 3D}
+\author[1]{Tori Broadnax}
+\author[1]{Jeffrey Do}
+\author[1]{Richard Roberts}
+\author[1]{Minh Vu}
+\affil[1]{George Mason University}
+
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+\begin{document}
+\maketitle
+
+The overall goal of this project was to create a 3D tower defense game that has procedurally generated levels. In this technical report, we will describe what we planned to do, how we went about it, and whether we completed it. Much of the technical report will be quoting our Project Proposal; it is all in here so there is no need to refer back to that document.
+
+\section*{Requirements}
+
+\subsection*{Procedurally Generated Level}
+
+\begin{displayquote}
+    The tower defense level will be procedurally generated. There should be at least one path from enemy spawn to the tower. The tower will be placed randomly. There should be tiles that cannot have weapons placed on them (like trees), and tiles that can. Weapons should not be able to be placed on the path.
+\end{displayquote}
+
+\subsection*{User Interface}
+
+There should be a tower health indicator. There should be a menu for selecting weapons to build. Once selected, the player should be able to select a tile, and the weapon should build if funds are sufficient. There should be a currency indicator. There should be buttons for starting and stopping the movement of enemies (like a pause).
+
+\subsection*{Weapons}
+
+There should be mutiple types of weapons that vary in damage, rate of fire, and range. Weapons will fire projectiles at enemies in their range. The player should be able to build these weapons on tiles in exchange for currency.
+
+\subsection*{Enemies}
+
+Enemies will have pathfinding towards to tower. When enemies reach the tower, a corresponding tower health deduction should take place. Enemies will have varying health, speed, and currency drops. Enemies should detect collisions with projectiles and take damage from them.
+
+\section*{Reach Requirements}
+
+\begin{itemize}
+    \item Upgradable Weapons
+    \item Weapon Selling
+\end{itemize}
+
+\section*{Technologies}
+
+\begin{itemize}
+    \item Unity
+\end{itemize}
+
+\section*{Timeline}
+\begin{tikzpicture}[
+        node distance = 1mm and 3mm,
+        start chain = A going below,
+        dot/.style = {
+                circle,
+                draw=white,
+                very thick,
+                fill=gray,
+                minimum size=3mm,
+            },
+        box/.style = {
+                rectangle,
+                text width=140mm,
+                inner xsep=4mm,
+                inner ysep=1mm,
+                on chain,
+            },
+    ]
+    \begin{scope}[every node/.append style={box}]
+        \node { Added some camera controller movement using free asset. };
+        \node { Very simple procedural algorithm with DFS to generate path. Ther was still a problem that the path touched. };
+        \node { Added A* pathfinding and used nodal pathfinding to generate enemy path. Added enemies, added enemy spawner, added enemy movement using the path from the map, documented the enemy script and destroyed the enemy object when it reached the tower. };
+        \node { Added weapons and weapons used LERP to rotate towards the nearest enemy. Added the balista and the canon prefabs with their respective projectiles. };
+        \node { Added blaster projectile. };
+    \end{scope}
+    \draw[very thick, gray, {Triangle[length=4pt)]}-{Circle[length=3pt]},
+    shorten <=-3mm, shorten >=-3mm]
+    (A-5.south west) -- (A-1.north west);
+    \foreach \i [ count=\j] in {
+            11/07,
+            11/09,
+            11/25,
+            11/26,
+            11/28
+        }
+    \node[dot,label=left:\i] at (A-\j.west) {};
+\end{tikzpicture}
+
+\section*{References}
+
+\begin{itemize}
+    \item \href{https://youtu.be/ulFc6p3hQzQ}{3D Tilemap in Unity}
+    \item \href{https://www.youtube.com/playlist?list=PLPV2KyIb3jR4u5jX8za5iU1cqnQPmbzG0}{Brackeys Unity Tower Defense}
+    \item \href{https://forum.unity.com/threads/how-can-i-place-a-tile-in-a-tilemap-by-script.508338/}{Manual Tilemap Unity}
+    \item \href{https://blog.unity.com/technology/procedural-patterns-you-can-use-with-tilemaps-part-i}{Procedural Tilemap}
+    \item \href{https://www.kenney.nl/assets/tower-defense-kit}{Kenney Tower Defense}
+    \item \href{https://isaacbroyles.com/gamedev/2020/07/04/unity-github-actions.html}{Unity GitHub Actions}
+\end{itemize}
+
+\end{document}

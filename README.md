@@ -1,4 +1,15 @@
-# tower-defense-3d
+<p align="center">
+  <h1 align="center">Tower Defense 3D</h1>
+  <p align="center">
+    3D Tower Defense with Procedurally Generated Levels
+    <br />
+    <a href="https://github.com/github_username/repo_name">Demo Video</a>
+    ·
+    <a href="https://github.com/github_username/repo_name/issues">Play Online</a>
+    ·
+    <a href="https://github.com/github_username/repo_name/issues">Technical Report</a>
+  </p>
+</p>
 
 ## Project Proposal
 Create a 3d tower defense game that has procedurally generated levels.

@@ -71,3 +71,9 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 /artifacts
+REPORT.aux
+REPORT.fdb_latexmk
+REPORT.fls
+REPORT.log
+REPORT.out
+REPORT.synctex.gz
