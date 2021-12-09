@@ -33,6 +33,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Reward(int currency)
+    {
+        Currency += currency;
+        Score += 100;
+    }
+
     // Update is called once per frame
     void Update()
     {

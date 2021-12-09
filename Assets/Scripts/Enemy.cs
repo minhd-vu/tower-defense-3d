@@ -59,6 +59,7 @@ public class Enemy : MonoBehaviour
         if (Health <= 0)
         {
             Health = 0;
+            Player.instance.Reward(currencyDrop);
             Destroy(gameObject);
         }
     }
