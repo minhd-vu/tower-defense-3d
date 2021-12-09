@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public Enemy enemy;
     private Transform target;
     public float speed = 5f;
-    public GameObject hitEffect;
+    public int damage = 1;
+    // public GameObject hitEffect;
 
     public void Seek(Transform target)
     {
@@ -51,7 +51,7 @@ public class Projectile : MonoBehaviour
     {
         // GameObject particle = Instantiate(hitEffect, transform.position, transform.rotation);
         // Destroy(particle, 2f);
-        enemy.health -= 25;
+        target.GetComponent<Enemy>().Damage(damage);
         Destroy(gameObject);
         return;
     }

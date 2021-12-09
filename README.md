@@ -34,3 +34,11 @@ Enemies will have pathfinding towards to tower. When enemies reach the tower, a 
 - [Manual Tilemap Unity](https://forum.unity.com/threads/how-can-i-place-a-tile-in-a-tilemap-by-script.508338/)
 - [Procedural Tilemap](https://blog.unity.com/technology/procedural-patterns-you-can-use-with-tilemaps-part-i)
 - [Kenney Tower Defense](https://www.kenney.nl/assets/tower-defense-kit)
+- [Unity GitHub Actions](https://isaacbroyles.com/gamedev/2020/07/04/unity-github-actions.html)
+
+## CI/CD
+
+To create a release for the project, push it with a `tag` which would be the `version number` (e.g. `v0.1`).
+```
+git push origin <tag>
+```

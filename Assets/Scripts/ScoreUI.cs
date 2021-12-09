@@ -7,8 +7,9 @@ public class ScoreUI : MonoBehaviour
 {
     public Text scoreText;
 
-	// Update is called once per frame
-	void Update () {
-        scoreText.text = "" + Player.instance.score.ToString();
-	}
+    // Update is called once per frame
+    void Update()
+    {
+        scoreText.text = "Score\n" + Player.instance.Score.ToString();
+    }
 }

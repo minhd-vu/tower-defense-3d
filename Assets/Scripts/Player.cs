@@ -6,10 +6,10 @@ public class Player : MonoBehaviour
 {
     public static Player instance;
     public int startingCurrency = 1000;
-    public int currency;
-    public int score;
+    public int Currency { get; private set; }
+    public int Score { get; private set; }
     public int maxHealth = 100;
-    public int health;
+    public int Health { get; private set; }
 
     void Awake()
     {
@@ -19,9 +19,18 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        score = 0;
-        health = maxHealth;
-        currency = startingCurrency;
+        Score = 0;
+        Health = maxHealth;
+        Currency = startingCurrency;
+    }
+
+    public void Damage(int damage)
+    {
+        Health -= damage;
+        if (Health <= 0)
+        {
+            Health = 0;
+        }
     }
 
     // Update is called once per frame

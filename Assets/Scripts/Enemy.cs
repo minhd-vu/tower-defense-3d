@@ -6,16 +6,17 @@ public class Enemy : MonoBehaviour
 {
     public Player plr;
     public int maxHealth = 100;
-    public int health;
+    public int Health { get; private set; }
     public float speed = 1f;
     private Vector3 target;
     private int pathIndex = 0;
     public int currencyDrop = 10;
+    public int damage = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
+        Health = maxHealth;
 
         // Get the first path the enemy should follow
         GetNextPath();
@@ -35,10 +36,6 @@ public class Enemy : MonoBehaviour
         {
             GetNextPath();
         }
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }
     }
 
     void GetNextPath()
@@ -47,12 +44,22 @@ public class Enemy : MonoBehaviour
         // Destroy the enemy if it has reached the tower
         if (++pathIndex >= path.Count)
         {
-            Player.instance.health--;
+            Player.instance.Damage(damage);
             Destroy(gameObject);
             return;
         }
 
         // Get the next path for the enemy to follow
         target = new Vector3(path[pathIndex].x, 0, path[pathIndex].y);
+    }
+
+    public void Damage(int damage)
+    {
+        Health -= damage;
+        if (Health <= 0)
+        {
+            Health = 0;
+            Destroy(gameObject);
+        }
     }
 }

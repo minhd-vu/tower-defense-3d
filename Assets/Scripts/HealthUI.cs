@@ -7,8 +7,9 @@ public class HealthUI : MonoBehaviour
 {
     public Text healthText;
 
-	// Update is called once per frame
-	void Update () {
-		healthText.text = "" + Player.instance.health.ToString();
-	}
+    // Update is called once per frame
+    void Update()
+    {
+        healthText.text = "Health\n" + Player.instance.Health.ToString();
+    }
 }
