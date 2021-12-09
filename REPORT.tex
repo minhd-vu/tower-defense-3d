@@ -70,42 +70,54 @@
 \begin{document}
 \maketitle
 
-The overall goal of this project was to create a 3D tower defense game that has procedurally generated levels. In this technical report, we will describe what we planned to do, how we went about it, and whether we completed it. Much of the technical report will be quoting our Project Proposal; it is all in here so there is no need to refer back to that document.
+\begin{abstract}
+    The overall goal of this project was to create a 3D tower defense game that has procedurally generated levels. The report is broken up into three primary sections: \hyperref[sec:Requirements]{Requirements}, \hyperref[sec:Technologies]{Technologies}, and \hyperref[sec:Timeline]{Timeline}. In the requirements section, we will be quoting mostly from the Project Proposal--you do not need to reference it because enough context will be provided. We will identify what was planned to do, what was accomplished, how it was accomplished, and what was failed to accomplish. 
+\end{abstract}
 
-\section*{Requirements}
+\newpage
 
-\subsection*{Procedurally Generated Level}
+\tableofcontents
+
+\newpage
+
+\section{Requirements}
+\label{sec:Requirements}
+
+\subsection{Procedurally Generated Level}
 
 \begin{displayquote}
+    \small
     The tower defense level will be procedurally generated. There should be at least one path from enemy spawn to the tower. The tower will be placed randomly. There should be tiles that cannot have weapons placed on them (like trees), and tiles that can. Weapons should not be able to be placed on the path.
 \end{displayquote}
 
-\subsection*{User Interface}
+\subsection{User Interface}
 
 There should be a tower health indicator. There should be a menu for selecting weapons to build. Once selected, the player should be able to select a tile, and the weapon should build if funds are sufficient. There should be a currency indicator. There should be buttons for starting and stopping the movement of enemies (like a pause).
 
-\subsection*{Weapons}
+\subsection{Weapons}
 
 There should be mutiple types of weapons that vary in damage, rate of fire, and range. Weapons will fire projectiles at enemies in their range. The player should be able to build these weapons on tiles in exchange for currency.
 
-\subsection*{Enemies}
+\subsection{Enemies}
 
 Enemies will have pathfinding towards to tower. When enemies reach the tower, a corresponding tower health deduction should take place. Enemies will have varying health, speed, and currency drops. Enemies should detect collisions with projectiles and take damage from them.
 
-\section*{Reach Requirements}
+\subsection{Reach Requirements}
 
 \begin{itemize}
     \item Upgradable Weapons
     \item Weapon Selling
 \end{itemize}
 
-\section*{Technologies}
+\section{Technologies}
+\label{sec:Technologies}
 
 \begin{itemize}
     \item Unity
 \end{itemize}
 
-\section*{Timeline}
+\section{Timeline}
+\label{sec:Timeline}
 \begin{tikzpicture}[
         node distance = 1mm and 3mm,
         start chain = A going below,
@@ -129,22 +141,32 @@ Enemies will have pathfinding towards to tower. When enemies reach the tower, a 
         \node { Very simple procedural algorithm with DFS to generate path. Ther was still a problem that the path touched. };
         \node { Added A* pathfinding and used nodal pathfinding to generate enemy path. Added enemies, added enemy spawner, added enemy movement using the path from the map, documented the enemy script and destroyed the enemy object when it reached the tower. };
         \node { Added weapons and weapons used LERP to rotate towards the nearest enemy. Added the balista and the canon prefabs with their respective projectiles. };
-        \node { Added blaster projectile. };
+        \node { Added blaster projectile. Added a building system so that when players clicked a tile, a corresponding weapon would be placed there. Before the weapons were just spawned in before hand. Additionally, a UI element was added so that only tiles that were valid building tiles would be highlighted yellow. Added a weapon menu so that users could select which weapon they wanted to build. Also added github actions so that the project would be automatically run through the default compile tests on commit. Futhermore, if the project is pushed with a tag, it will create a release for Windows. };
+        \node { Fixed some bugs with the tile highlighting UI. };
+        \node { Added the foundations for the player, which would be a singleton and contain the health, score, and currency. };
+        \node { Added player, health, score, and currency indicators on the UI. };
+        \node { Added basis for the player and enemies taking damage. };
+        \node { Refactored player damage from a fixed number to dynamic one determined by the projectile prefab. Score now increments and currency increases when enemies are destroyed. The currency dropped based on how much the enemy is worth. Created the techincal report using \LaTeX (this file), presentation, and demo video. };
     \end{scope}
-    \draw[very thick, gray, {Triangle[length=4pt)]}-{Circle[length=3pt]},
-    shorten <=-3mm, shorten >=-3mm]
-    (A-5.south west) -- (A-1.north west);
+    \draw[very thick, gray,
+    {Triangle[length=4pt)]}-{Circle[length=3pt]},shorten <=-3mm, shorten >=-3mm]
+    (A-10.south west) -- (A-1.north west);
     \foreach \i [ count=\j] in {
             11/07,
             11/09,
             11/25,
             11/26,
-            11/28
+            11/28,
+            11/29,
+            11/30,
+            12/03,
+            12/07,
+            12/09
         }
     \node[dot,label=left:\i] at (A-\j.west) {};
 \end{tikzpicture}
 
-\section*{References}
+\section{References}
 
 \begin{itemize}
     \item \href{https://youtu.be/ulFc6p3hQzQ}{3D Tilemap in Unity}

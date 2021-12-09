@@ -76,4 +76,5 @@ REPORT.fdb_latexmk
 REPORT.fls
 REPORT.log
 REPORT.out
+REPORT.toc
 REPORT.synctex.gz
