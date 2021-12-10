@@ -62,7 +62,7 @@ public class Enemy : MonoBehaviour
 
         Health -= damage;
 
-        healthBar.fillAmount = Health / maxHealth;
+        healthBar.fillAmount = (float)Health / maxHealth;
 
         if (Health <= 0)
         {

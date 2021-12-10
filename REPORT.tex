@@ -55,7 +55,6 @@
     tabsize=2
 }
 
-
 \lstset{style=mystyle}
 
 \title{Procedurally Generated Tower Defense 3D}
@@ -65,13 +64,13 @@
 \author[1]{Minh Vu}
 \affil[1]{George Mason University}
 
-\setlength{\parskip}{\baselineskip}%
-\setlength{\parindent}{0pt}%
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
 \begin{document}
 \maketitle
 
 \begin{abstract}
-    The overall goal of this project was to create a 3D tower defense game that has procedurally generated levels. The report is broken up into three primary sections: \hyperref[sec:Requirements]{Requirements}, \hyperref[sec:Technologies]{Technologies}, and \hyperref[sec:Timeline]{Timeline}. In the requirements section, we will be quoting mostly from the Project Proposal--you do not need to reference it because enough context will be provided. We will identify what was planned to do, what was accomplished, how it was accomplished, and what was failed to accomplish. 
+    The overall goal of this project was to create a 3D tower defense game that has procedurally generated levels. The report is broken up into three primary sections: \hyperref[sec:Requirements]{Requirements}, \hyperref[sec:Technologies]{Technologies}, and \hyperref[sec:Timeline]{Timeline}. In the requirements section, we will be quoting mostly from the Project Proposal--you do not need to reference it because enough context will be provided. We will identify what was planned to do, what was accomplished, how it was accomplished, and what was failed to accomplish. In the technology section, we will describe what technologies were used and how they aided us. Additionally, we will describe what parts beyond that given technology that were implemeneted by us. Lastly, the timeline section will chronologically detail what steps we took to reach our final product.
 \end{abstract}
 
 \newpage
@@ -89,6 +88,41 @@
     \small
     The tower defense level will be procedurally generated. There should be at least one path from enemy spawn to the tower. The tower will be placed randomly. There should be tiles that cannot have weapons placed on them (like trees), and tiles that can. Weapons should not be able to be placed on the path.
 \end{displayquote}
+
+This was the primary requirement of the project, and it was the most difficult to implement. The intial stages of the algorithm were kind attrocious looking back on it. The algorithm then, and still, currently only works for a ten by ten grid/map size. The basis of this algorithm is that a start and end point would be generated. The start would be where enemies spawn, and the end would be where the tower is or the enemies' goal. A depth first search would then be conducted and start until it found the endpoint, it would then set all the tiles that it cross to get to that path to be a value of "walkable".
+
+\vspace{5mm}
+
+\begin{algorithmic}
+    \Procedure{generate-map}{$map$}
+    \State $start \gets (0, \Call{random}{map.size.y})$
+    \State $end \gets (map.size.y - 1, \Call{random}{map.size.y})$
+    \State \Call{depth-first-search}{$start, end$}
+    \EndProcedure
+\end{algorithmic}
+
+The problem with the algorithm was that it would produce a path that would be touching itself, making it uninteresting and kind of illogical. Additionally, there would be no way for the enemy to traverse this path in an "attractive" manner most of the time. The solution was to implement something nodal pathfinding using A*. The concept is that we would choose a set of waypoints and pass them in to A* so that it would produce an optimal path between them.
+
+\vspace{5mm}
+
+\begin{algorithmic}
+    \Procedure{generate-map}{$map$}
+    \State $start \gets (0, \Call{random}{map.size.y})$
+    \State $end \gets (map.size.y - 1, \Call{random}{map.size.y})$
+    \State $waypoints \gets \emptyset$
+    \State \Call{set-add}{$waypoints, start$}
+    \For{$i \gets 3, i < 7, i = i + 2$}
+    \State $pos \gets (i, \Call{random}{map.size.y})$
+    \State \Call{set-add}{$waypoints, pos$}
+    \EndFor
+    \State \Call{set-add}{$waypoints, end$}
+    \For{$i \gets 0$}
+    \State \Call{a*-pathfinding}{$waypoints[i], waypoints[i + 1]$}
+    \EndFor
+    \EndProcedure
+\end{algorithmic}
+
+This solution proved to work well.
 
 \subsection{User Interface}
 
