@@ -11,9 +11,9 @@
   </p>
 </p>
 
-https://user-images.githubusercontent.com/18576915/145603426-28229786-61c1-42af-b43c-b0333b50f9d3.mp4
+https://user-images.githubusercontent.com/18576915/145604368-ccfb6707-08f0-457f-8230-ac9beb1c768b.mp4
 
-https://user-images.githubusercontent.com/18576915/145603485-7c953c13-917a-4f95-85a7-d54700993d5c.mp4
+https://user-images.githubusercontent.com/18576915/145604387-f9129cd8-0d23-4c5f-aa3f-595e7cb6f7b0.mp4
 
 ## Project Proposal
 Create a 3d tower defense game that has procedurally generated levels.
