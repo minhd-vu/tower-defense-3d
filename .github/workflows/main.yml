@@ -5,53 +5,55 @@ on:
     tags:
       - "*"
 
-env:
-  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-
 jobs:
   build:
-    name: Build my project
+    name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneOSX
+          - StandaloneWindows
+          - StandaloneWindows64
+          - StandaloneLinux64
+          - WebGL
     steps:
       # Checkout
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           lfs: true
 
       # Cache
       - uses: actions/cache@v2
         with:
           path: Library
-          key: Library
-
-      # Test
-      - name: Run tests
-        uses: game-ci/unity-test-runner@v2
-        with:
-          unityVersion: 2020.3.23f1
+          key: Library-${{ matrix.targetPlatform }}
+          restore-keys: Library-
 
       # Build
-      - name: Build project
-        uses: game-ci/unity-builder@v2
+      - uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
-          unityVersion: 2020.3.23f1
-          targetPlatform: StandaloneWindows64
+          targetPlatform: ${{ matrix.targetPlatform }}
 
       # Output
       - uses: actions/upload-artifact@v2
         with:
-          name: Build
-          path: build
+          name: Build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
 
       - name: Zip build
         run: |
-          pushd build/StandaloneWindows64
-          zip -r ../../StandaloneWindows64.zip .
+          pushd build/${{ matrix.targetPlatform }}
+          zip -r ../../${{ matrix.targetPlatform }}.zip .
           popd
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: StandaloneWindows64.zip
+          files: ${{ matrix.targetPlatform }}.zip
           name: Release ${{ github.ref }}
