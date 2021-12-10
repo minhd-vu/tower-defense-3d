@@ -13,8 +13,6 @@ public class Enemy : MonoBehaviour
     private int pathIndex = 0;
     public int currencyDrop = 10;
     public int damage = 1;
-
-    [Header("Unity stuff")]
     public Image healthBar;
 
     // Start is called before the first frame update
@@ -34,6 +32,8 @@ public class Enemy : MonoBehaviour
         Vector3 dir = target - position;
         // Debug.Log(dir);
         transform.Translate(dir.normalized * speed * Time.deltaTime);
+
+        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, (float)Health / maxHealth, 10f * Time.deltaTime);
 
         // Give a new path node if the enemy has reach it
         if (Vector3.Distance(position, target) <= 0.01f)
@@ -59,10 +59,7 @@ public class Enemy : MonoBehaviour
 
     public void Damage(int damage)
     {
-
         Health -= damage;
-
-        healthBar.fillAmount = (float)Health / maxHealth;
 
         if (Health <= 0)
         {
