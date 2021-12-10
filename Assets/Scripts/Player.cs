@@ -33,6 +33,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    public bool Buy(int cost)
+    {
+        if (Currency < cost)
+            return false;
+            
+        Currency -= cost;
+        return true;
+    }
+
     public void Reward(int currency)
     {
         Currency += currency;

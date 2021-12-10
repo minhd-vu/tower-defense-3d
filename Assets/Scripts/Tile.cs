@@ -34,7 +34,10 @@ public class Tile : MonoBehaviour
             return;
 
         var building = BuildManager.instance.GetBuilding();
-        weapon = Instantiate(building, transform.position + building.transform.position, transform.rotation);
+        var cost = building.GetComponent<Weapon>().cost;
+
+        if (Player.instance.Buy(cost))
+            weapon = Instantiate(building, transform.position + building.transform.position, transform.rotation);
     }
     void OnMouseEnter()
     {
