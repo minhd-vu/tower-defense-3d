@@ -7,7 +7,7 @@
     ·
     <a href="https://github.com/github_username/repo_name/issues">Play Online</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Technical Report</a>
+    <a href="https://github.com/minhd-vu/tower-defense-3d/blob/master/REPORT.pdf">Technical Report</a>
   </p>
 </p>
 
