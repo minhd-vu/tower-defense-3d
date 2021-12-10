@@ -3,11 +3,13 @@
   <p align="center">
     3D Tower Defense with Procedurally Generated Levels
     <br />
-    <a href="https://github.com/github_username/repo_name">Demo Video</a>
+    <a href="https://github.com/minhd-vu/tower-defense-3d/">Demo Video</a>
     ·
     <a href="https://minhd-vu.github.io/tower-defense-3d/">Play Online</a>
+    .
+    <a href="https://github.com/minhd-vu/tower-defense-3d/releases">Releases</a>
     ·
-    <a href="https://github.com/minhd-vu/tower-defense-3d/blob/master/REPORT.pdf">Technical Report</a>
+    <a href="https://github.com/minhd-vu/tower-defense-3d/blob/master/report.pdf">Technical Report</a>
   </p>
 </p>
 
