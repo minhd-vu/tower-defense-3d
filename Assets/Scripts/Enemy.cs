@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class Enemy : MonoBehaviour
     private int pathIndex = 0;
     public int currencyDrop = 10;
     public int damage = 1;
+
+    [Header("Unity stuff")]
+    public Image healthBar;
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +59,11 @@ public class Enemy : MonoBehaviour
 
     public void Damage(int damage)
     {
+
         Health -= damage;
+
+        healthBar.fillAmount = Health / maxHealth;
+
         if (Health <= 0)
         {
             Health = 0;
