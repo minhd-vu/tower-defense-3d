@@ -13,6 +13,15 @@
 \usepackage{csquotes}
 \usepackage{authblk}
 \usepackage{tikz}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+}
 \usetikzlibrary{arrows.meta,chains,positioning}
 
 \titlespacing{\section}{0pt}{*0}{*0}
@@ -83,6 +92,7 @@
 \label{sec:Requirements}
 
 \subsection{Procedurally Generated Level}
+\label{Procedurally Generated Level}
 
 \begin{displayquote}
     \small
@@ -168,7 +178,7 @@ Both of these reach requirements were not met. For both of these items, a menu w
     \item Kenney Tower Defense
 \end{itemize}
 
-Unity was the game engine that was used to create this game. It aided a lot in the placement of models and the UI. However, all of the procedural generation was done via script manually, and the engine did not do this. A* was also manually implemented in scripts. Some other items that were done by scripts are linking all the components together, allowing them to seamlessly interact with one another. The base view for the game is simply an empty screen--there are no models in view (only UI elements); only when you click the play button do you see items appear. Kenney Tower Defense is a 3D asset pack with the essentials to get started with making a 3D tower defense game. Making 3D assets goes beyond the scope of this class so we avoided custom assets.
+Unity was the game engine that was used to create this game. It aided a lot in the placement of models and the UI. However, all of the procedural generation was done via script manually, and the engine did not do this. A* was also manually implemented in scripts. Some other items that were done by scripts are linking all the components together, allowing them to seamlessly interact with one another. The base view for the game is simply an empty screen--there are no models in view (only UI elements); only when you click the play button do you see items appear. \hyperref[sec:References]{Kenney Tower Defense} is a 3D asset pack with the essentials to get started with making a 3D tower defense game. Making 3D assets goes beyond the scope of this class so we avoided custom assets.
 
 \section{Timeline}
 \label{sec:Timeline}
@@ -221,12 +231,12 @@ Unity was the game engine that was used to create this game. It aided a lot in t
 \end{tikzpicture}
 
 \section{Reflection}
-\label{Reflection}
+\label{sec:Reflection}
 
 % Insert Reflection Here %
 
 \section{References}
-\label{References}
+\label{sec:References}
 
 \begin{itemize}
     \item \href{https://youtu.be/ulFc6p3hQzQ}{3D Tilemap in Unity}
