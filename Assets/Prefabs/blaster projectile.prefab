@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  hitEffect: {fileID: 0}
+  damage: 10
 --- !u!1 &6792350734685346361
 GameObject:
   m_ObjectHideFlags: 0
