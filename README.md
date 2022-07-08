@@ -3,8 +3,6 @@
   <p align="center">
     3D Tower Defense with Procedurally Generated Levels
     <br />
-    <a href="https://github.com/minhd-vu/tower-defense-3d/">Demo Video</a>
-    ·
     <a href="https://minhd-vu.github.io/tower-defense-3d/">Play Online</a>
     .
     <a href="https://github.com/minhd-vu/tower-defense-3d/releases">Releases</a>
@@ -12,6 +10,10 @@
     <a href="https://github.com/minhd-vu/tower-defense-3d/blob/master/report.pdf">Technical Report</a>
   </p>
 </p>
+
+https://user-images.githubusercontent.com/18576915/145604368-ccfb6707-08f0-457f-8230-ac9beb1c768b.mp4
+
+https://user-images.githubusercontent.com/18576915/145604387-f9129cd8-0d23-4c5f-aa3f-595e7cb6f7b0.mp4
 
 ## Project Proposal
 Create a 3d tower defense game that has procedurally generated levels.
