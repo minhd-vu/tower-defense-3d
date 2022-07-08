@@ -76,3 +76,5 @@ report.*
 !report.tex
 reflection.*
 !reflection.tex
+
+.DS_Store

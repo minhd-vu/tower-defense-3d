@@ -67,9 +67,6 @@
 \lstset{style=mystyle}
 
 \title{Procedurally Generated Tower Defense 3D}
-\author[1]{Tori Broadnax}
-\author[1]{Jeffrey Do}
-\author[1]{Richard Roberts}
 \author[1]{Minh Vu}
 \affil[1]{George Mason University}
 
@@ -234,6 +231,43 @@ Unity was the game engine that was used to create this game. It aided a lot in t
 \label{sec:Reflection}
 
 % Insert Reflection Here %
+
+The part of the game I was responsible for was the \hyperref[sec:Requirements]{Procedurally Generated Level}. You can see the technical aspect of it above, so I will not repeat myself here. I also contributed towards parts of the UI being the selection menu for the weapons. Furthermore, I implemented the base for the building of the weapons. Spawning of the enemies and their pathing was also done by me. Projectile movement and weapon rotation and enemy lock-on was completed by me as well. I also added GitHub Actions to control the CI/CD workflow, so on every commit (with a tag) it will build the project and create a corresponding release.
+
+Most of the challenging parts were from converting the original depth-first search algorithm into the nodal pathfinding one. I could not find many resources for finding a procedural tower defense algorithm, and even A* alone does not prevent neighbors from touching. I had to combine A* with prevents it from going to tiles while are adjacent to neighbors, this was slightly finicky because the last tile could not count as a neighbor, or else the algorithm would terminate prematurely.
+
+\begin{lstlisting}
+public class GenerateMap : MonoBehaviour
+{
+    // Get the neighbors of a node in an adjacency matrix
+    private List<Vector2Int> GetNeighbors(int x, int y)
+    {
+        return new List<Vector2Int>(4)
+        {
+            new Vector2Int(x + 1, y),
+            new Vector2Int(x, y + 1),
+            new Vector2Int(x, y - 1),
+            new Vector2Int(x - 1, y),
+        }.FindAll(e => InMapBounds(e.x, e.y));
+    }
+
+    // A* pathfinding from start to end position
+    private bool FindPath(Vector2Int start, Vector2Int end)
+    {
+        foreach (Vector2Int pos in Shuffle(GetNeighbors(curr.x, curr.y)))
+        {
+            // The neighbors to the current neighbor, prevent paths from being adjacent to one another
+            var adjacent = GetNeighbors(pos.x, pos.y);
+            if (adjacent.Any(e => e.x != curr.x && e.y != curr.y && map[e.x, e.y] == 1))
+                continue;
+        }
+    }
+}
+\end{lstlisting}
+
+I think my most accomplished feature actually is this document, and the technical report (you will see many similarities). I am still relatively new to \LaTeX so being able to create some attractive PDFs has always been a goal of mine. The timeline, although I sourced it from a StackOverflow post, it is still pretty cool to see it on something I made.
+
+Some shortcomings and items that I would like to implement in the future include game balancing and enemy scaling. Right now there is no game balance, you could literally place a couple of turrets and continue forever. Balancing is a different beast though, to make a game both challenging and rewarding is a problem many AAA game developers still face today. Enemy scaling ties a little in with game balancing, but currently, there is no system in place to make the enemies progressively harder. I think I may still work on this project in the future, just to polish out some things and make it a more functional MVP. I am very proud to show this in my portfolio.
 
 \section{References}
 \label{sec:References}
